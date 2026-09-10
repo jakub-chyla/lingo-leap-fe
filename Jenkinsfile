@@ -2,9 +2,19 @@ pipeline {
     agent any
 
     stages {
+
         stage('Docker Build') {
             steps {
-                sh 'docker build -t lingo-leap-fe:latest .'
+                sh 'docker build -t ghcr.io/jakub-chyla/lingo-leap-fe:latest .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    cd /opt/docker/application
+                    docker compose up -d --force-recreate frontend
+                '''
             }
         }
     }

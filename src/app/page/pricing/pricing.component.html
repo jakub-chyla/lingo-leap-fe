@@ -1,0 +1,59 @@
+<div class="flex justify-center items-center h-[90vh]">
+  <mat-card class="card" appearance="outlined">
+    <div class="flex justify-between items-center gap-2 pb-2">
+      <div class="pl-4 text-xl">
+        <span>{{ 'Pricing' }}</span>
+      </div>
+      <div>
+        <button style="" mat-icon-button (click)="navigateToMain()">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card-content>
+      <div *ngIf="user?.username" class="pricing-cloud" (click)="checkout()">
+        <div class="m-[20px]">
+          <h1>Subscription</h1>
+          <h4>1.99$/week</h4>
+          <div class="m-[20px]">
+            <p><b>Unlimited Shuffles</b> – Improve your skills with exclusive shuffle access.</p>
+            <p><b>Early Access to New Features</b> – Be the first to explore the latest tools.</p>
+            <p><b>Community Involvement</b> – Help shape the future of this app with your feedback.</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!user?.username" class="pricing-cloud">
+        <div class="m-[20px]">
+          <h1>Subscription</h1>
+          <h4>1.99$/week</h4>
+          <div class="m-[20px]">
+            <p><b>Unlimited Shuffles</b> – Improve your skills with exclusive shuffle access.</p>
+            <p><b>Early Access to New Features</b> – Be the first to explore the latest tools.</p>
+            <p><b>Community Involvement</b> – Help shape the future of this app with your feedback.</p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div class="flex justify-center pt-[20px]">
+        <div *ngIf="user?.username">
+          <ng-container *ngIf="!loading; else loadingTemplate">
+            <button class="w-[155px]" mat-raised-button color="accent" (click)="checkout()"
+                    type="submit">Get subscription
+            </button>
+          </ng-container>
+          <ng-template #loadingTemplate>
+            <button class="w-[155px]" mat-raised-button color="accent" [disabled]="true" type="submit">
+              <mat-spinner [diameter]="22"></mat-spinner>
+            </button>
+          </ng-template>
+        </div>
+        <div *ngIf="!user?.username">
+          <button mat-raised-button color="primary" (click)="navigateToLogin()"
+                  type="submit">Log in
+          </button>
+        </div>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>

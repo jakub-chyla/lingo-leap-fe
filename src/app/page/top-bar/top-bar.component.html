@@ -1,0 +1,47 @@
+<mat-toolbar class="top-bar">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu class="menu" #menu="matMenu">
+    <button
+      mat-menu-item
+      (click)="navigateToPricing()">
+      <mat-icon >shopping_cart</mat-icon>
+      Pricing
+    </button>
+    <button
+
+      mat-menu-item (click)="navigateToAbout()">
+      <mat-icon>info</mat-icon>
+      About
+    </button>
+    <button *ngIf="isAdmin"
+            mat-menu-item (click)="navigateToAdmin()">
+      <mat-icon >person</mat-icon>
+      Admin
+    </button>
+  </mat-menu>
+  <div class="cursor-pointer"><a (click)="navigateToMain()">Lingo Leap</a></div>
+  <span class="icon-spacer"></span>
+  {{ this.user?.username }}
+  <button *ngIf="!darkMode" mat-icon-button
+          matTooltip="Light mode"
+          (click)="switchMode()">
+    <mat-icon>light_mode</mat-icon>
+  </button>
+  <button *ngIf="darkMode" mat-icon-button
+          matTooltip="Dark mode"
+          (click)="switchMode()">
+    <mat-icon>dark_mode</mat-icon>
+  </button>
+  <button *ngIf="this.user?.token === undefined || this.user?.token === null" mat-icon-button
+          matTooltip="Log in"
+          (click)="navigateToLogin()">
+    <mat-icon>login</mat-icon>
+  </button>
+  <button *ngIf="!(this.user?.token === undefined || this.user?.token === null)" mat-icon-button
+          matTooltip="Log out"
+          (click)="logOut()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

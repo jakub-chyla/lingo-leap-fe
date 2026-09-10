@@ -1,0 +1,55 @@
+<div class="flex justify-center items-center h-[90vh]">
+  <mat-card class="card" appearance="outlined">
+    <div class="flex justify-between items-center gap-2 pb-2">
+      <div class="pl-4 text-xl">
+        <span>{{ 'Log In' }}</span>
+      </div>
+      <div>
+        <button mat-icon-button (click)="navigateToMain()">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card-content>
+      <form [formGroup]="myForm">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <mat-form-field appearance="fill" hideRequiredMarker="true" class="input">
+              <mat-label>User</mat-label>
+              <input type="text" matInput formControlName="username">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill" hideRequiredMarker="true" class="input">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput formControlName="password">
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-footer>
+      <div class="flex justify-center">
+        <div class="pr-[55px]">
+          <button mat-stroked-button color="primary" (click)="navigateToSingIn()" [disabled]="loading">Sign in</button>
+        </div>
+        <div>
+
+          <ng-container *ngIf="!loading; else loadingTemplate">
+            <button mat-raised-button color="primary"
+                    (click)="logIn()"
+                    [disabled]="myForm.invalid">
+              Log in
+            </button>
+          </ng-container>
+          <ng-template #loadingTemplate>
+            <button class="w-[77px]" mat-raised-button color="primary" [disabled]="true" type="submit">
+              <mat-spinner [diameter]="22"></mat-spinner>
+            </button>
+          </ng-template>
+
+        </div>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>

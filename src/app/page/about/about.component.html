@@ -1,0 +1,37 @@
+<div class="flex justify-center items-center h-[90vh]">
+  <mat-card class="card" appearance="outlined">
+    <div class="flex justify-between items-center gap-2 pb-2">
+      <div class="pl-4 text-xl">
+        <span>{{ 'About' }}</span>
+      </div>
+      <div>
+        <button style="" mat-icon-button (click)="navigateToMain()">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="about-cloud w-[28vw] min-w-[300px]">
+        <div class="m-[20px]">
+          <h1>Lingo Leap</h1>
+          <h4>Your Fun & Effective Everyday Language Challenge!</h4>
+          <div >
+            <p>Lingo Leap is a daily language challenge that makes learning fun and interactive!</p>
+            <p>The app presents you with quizzes where you choose the correct word from nine options, helping you sharpen your vocabulary and recognition skills.</p>
+            <p>Plus, Lingo Leap can read words aloud, allowing you to practice pronunciation and improve your listening skills.</p>
+            <p>Stay engaged, challenge yourself every day, and take the leap toward fluency.</p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div class="flex justify-center pt-[20px]">
+        <div>
+          <button mat-raised-button color="accent" (click)="navigateToMain()"
+                  type="submit">Close
+          </button>
+        </div>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>

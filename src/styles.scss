@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  text-align: center;
+}
+
+:root {
+  --background-color: #ffffff;
+  --background-color-components: #ffffff;
+  --text-color: #000000;
+  --pricing-cloud-border: #bfbfbf;
+  --pricing-cloud-border-hoover: #8f8f8f;
+}
+
+.dark-theme {
+  --background-color: #1f2937;
+  --background-color-components: #34435c;
+  --text-color: #ffffff;
+  --pricing-cloud-border: #7c8ea5;
+  --pricing-cloud-border-hoover: #a2b1c6;
+}
+
+.card {
+  border-radius: 10px !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 1) !important;
+  padding: 20px !important;
+  margin: 20px auto !important;
+  background-color: var(--background-color-components) !important;
+  color: var(--text-color);
+}
+
+.pricing-cloud,
+.about-cloud {
+  border-color: var(--pricing-cloud-border) !important;
+}
+
+.pricing-cloud:hover,
+.about-cloud:hover{
+  border-color: var(--pricing-cloud-border-hoover) !important;
+}
+
+.menu {
+  background-color: var(--background-color) !important;
+}
+
+.menu .mat-icon-no-color,
+.menu .mat-mdc-menu-item {
+  color: var(--text-color) !important;
+}
+
+.input .mdc-floating-label{
+  color: var(--text-color) !important;
+}
+
+.input .mdc-text-field__input{
+  color: var(--text-color) !important;
+}
+
+.input .mdc-text-field--filled:not(.mdc-text-field--disabled){
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.sign-in {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--text-color) !important;
+}
+
+.mat-mdc-table .mat-mdc-header-row{
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-row{
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled){
+  color: var(--text-color) !important;
+}

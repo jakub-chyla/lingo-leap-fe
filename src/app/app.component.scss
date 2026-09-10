@@ -1,0 +1,50 @@
+$primary-color: #673ab7;
+$accent-color: #ffd740;
+$warn-color: #f24236;
+
+
+.wrong-answer {
+  background-color: $warn-color !important;
+  color: white !important;
+  height: 60px;
+  border-radius: 8px;
+
+  ::ng-deep .mdc-button__label {
+    margin-left: -6px;
+    margin-right: -6px;
+  }
+}
+
+.good-answer {
+  background-color: green !important;
+  color: white !important;
+  height: 60px;
+  border-radius: 8px;
+
+  ::ng-deep .mdc-button__label {
+    margin-left: -6px;
+    margin-right: -6px;
+  }
+}
+
+.settings-close {
+  &:hover {
+    cursor: pointer;
+    color: $warn-color;
+  }
+}
+
+.settings-open {
+  &:hover {
+    cursor: pointer;
+    color: $accent-color;
+  }
+}
+
+.green-text {
+  color: #00b500;
+}
+
+.red-text {
+  color: #ff7b7b;
+}

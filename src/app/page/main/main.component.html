@@ -1,0 +1,87 @@
+<mat-card class="card" appearance="outlined">
+  <div class="flex justify-between">
+    <div>
+      <div class="flex justify-between gap-0.5 items-end">
+        <div class="font-bold text-[16px] green-text">
+          <span>{{ correctAnswerCounter }}</span>
+        </div>
+        <div class="text-[10px] mb-[-2px]"> /</div>
+        <div class="text-[10px] mb-[-2px]">
+          <span>{{ allAnswerCounter }}</span>
+        </div>
+      </div>
+      <div *ngIf="user?.username">
+        <mat-progress-bar
+          mode="determinate"
+          color="accent"
+          [value]="progressValue"
+          class="glowing-bar">
+        </mat-progress-bar>
+      </div>
+    </div>
+    <span
+      *ngIf="user?.username"
+      class="material-icons bolt mt-[3px]"
+      [ngClass]="{ 'is-reinforcement': isReinforcement }"
+      (click)="setReinforcement()"
+    >
+  bolt
+</span>
+    <span class="icon-spacer"></span>
+    <div>
+      <span *ngIf="settings" class="material-icons settings-close" (click)="settingsToggle()">close</span>
+      <span *ngIf="!settings" class="material-icons settings-open" (click)="settingsToggle()">settings</span>
+    </div>
+  </div>
+  <mat-card-content
+    class="flex flex-col justify-between w-[30vw] min-w-[400px] max-w-[700px] h-[340px] !ml-[-20px] !mr-[-20px]">
+    <ng-template [ngIf]="!settings">
+      <ng-template [ngIf]="!englishToPolish">
+        <div class="flex justify-center">
+          <div class="word w-4/5"> {{ displayWord }}</div>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="englishToPolish">
+        <div class="flex justify-center">
+          <div class="word w-4/5"> {{ displayWord }}</div>
+        </div>
+      </ng-template>
+      <div class="flex justify-center gap-2 pt-[14px]" style="padding-top: 14px">
+        <ng-template [ngIf]="isLoading">
+          <div> {{ count }}</div>
+        </ng-template>
+      </div>
+      <ng-container *ngIf="!isLoading">
+        <div class="flex justify-center gap-2 pt-[14px]" *ngFor="let row of buttonRows">
+          <button *ngFor="let i of row" [disabled]="buttonStatuses[i] === 3" mat-raised-button
+                  [ngClass]="{'answer-button': buttonStatuses[i] === 0,'good-answer': buttonStatuses[i] === 1,
+                    'wrong-answer': buttonStatuses[i] === 2, 'disable-button': buttonStatuses[i] === 3}"
+                  (click)="checkAnswer(answers[i], i)">
+            {{ answers[i] }}
+          </button>
+        </div>
+      </ng-container>
+    </ng-template>
+    <ng-template [ngIf]="settings">
+      <div class="word py-5">
+        {{ 'auto next' }}
+        <mat-slide-toggle [(ngModel)]="autoNext" (ngModelChange)="settingChanged()"></mat-slide-toggle>
+      </div>
+      <div class="word py-2">
+        {{ 'auto read' }}
+        <mat-slide-toggle [(ngModel)]="autoRead" (ngModelChange)="settingChanged()"></mat-slide-toggle>
+      </div>
+    </ng-template>
+    <div *ngIf="!settings" class="flex justify-center gap-2 pt-[25px]">
+      <div>
+        <button [disabled]="settings || isLoading" mat-raised-button color="accent" (click)="getRandom()">Shuffle
+        </button>
+      </div>
+      <div>
+        <button [disabled]="settings" mat-raised-button color="accent" (click)="readQuestion()">
+          <span class="material-icons">volume_up</span>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

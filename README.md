@@ -8,7 +8,6 @@
 * [Devops](#devops)
 
 
-
 ## General info
 
 Link to deployed application >>> https://www.lingoleap.com.pl/main <<<

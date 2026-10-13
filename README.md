@@ -69,7 +69,7 @@ Dark mode with CSS variable
 - Mockito
 - Stripe
 - Email sender
-
+  
 ## FrontEnd
 - Angular 18
 - Angular Material
@@ -79,4 +79,6 @@ Dark mode with CSS variable
   
 ## Devops
 - Docker images deployed on ubuntu VPS
+- Jenkins
+- K3s
 # lingo-leap-fe

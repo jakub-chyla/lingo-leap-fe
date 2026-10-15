@@ -2,7 +2,7 @@
   "name": "lingo-leap-fe",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
+    "ng": "ng serve",
     "start": "ng serve --port 4200 --host 0.0.0.0",
     "build": "ng build",
     "start:prod": "ng serve --configuration production --port 4200 --host 0.0.0.0",

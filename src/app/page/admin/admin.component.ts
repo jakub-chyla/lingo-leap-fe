@@ -27,7 +27,6 @@ import {Language} from "../../enum/Language";
 import {Attachment} from "../../model/attachment";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {finalize} from "rxjs";
-import {BuildService} from "../../service/build.service";
 
 @Component({
   selector: 'app-admin',
@@ -77,8 +76,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   constructor(private readonly attachmentService: AttachmentService,
               private readonly formBuilder: FormBuilder,
               private readonly router: Router,
-              private readonly wordService: WordService,
-              private readonly buildService: BuildService) {
+              private readonly wordService: WordService) {
   }
 
   ngOnInit() {
@@ -190,12 +188,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.attachmentService.trimLastSecondFromAllAttachments()
       .pipe(finalize(() => this.isTrimmingAttachments = false))
       .subscribe();
-  }
-
-  kafkaTest() {
-    this.buildService.kafkaTest().subscribe(res =>{
-      console.log(res);
-    });
   }
 
   protected upload(wordId: number, language: Language) {

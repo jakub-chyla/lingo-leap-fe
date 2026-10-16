@@ -85,4 +85,8 @@ export class TopBarComponent implements OnInit {
   protected navigateToAdmin(): void {
     this.router.navigate(['/admin']);
   }
+
+  protected navigateToReport(): void {
+    this.router.navigate(['/report']);
+  }
 }

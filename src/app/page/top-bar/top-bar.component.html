@@ -19,6 +19,11 @@
       <mat-icon >person</mat-icon>
       Admin
     </button>
+    <button *ngIf="isAdmin"
+            mat-menu-item (click)="navigateToReport()">
+      <mat-icon >list_alt</mat-icon>
+      Report
+    </button>
   </mat-menu>
   <div class="cursor-pointer"><a (click)="navigateToMain()">Lingo Leap</a></div>
   <span class="icon-spacer"></span>

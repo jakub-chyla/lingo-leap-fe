@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {Report} from "../model/report";
 import {environment} from "../../environments/environment";
 
@@ -17,11 +17,18 @@ export class SseService {
 
       const connect = async () => {
         while (!disposed) {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            observer.error(new Error('Brak tokenu administratora. Zaloguj się ponownie.'));
+            return;
+          }
+
           controller = new AbortController();
           try {
             const response = await fetch(url, {
               headers: {
                 Accept: 'text/event-stream',
+                Authorization: 'Bearer ' + token
               },
               signal: controller.signal
             });

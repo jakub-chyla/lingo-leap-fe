@@ -27,7 +27,6 @@ import {Language} from "../../enum/Language";
 import {Attachment} from "../../model/attachment";
 import {MatSort, MatSortModule} from "@angular/material/sort";
 import {finalize} from "rxjs";
-import {SseService} from "../../service/sse.service";
 
 @Component({
   selector: 'app-admin',

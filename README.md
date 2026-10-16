@@ -7,6 +7,7 @@
 * [FrontEnd](#frontend)
 * [Devops](#devops)
 
+
 ## General info
 
 Link to deployed application >>> https://www.lingoleap.com.pl/main <<<
@@ -56,8 +57,6 @@ Dark mode with CSS variable
 ![image](https://github.com/user-attachments/assets/3a36a092-9e59-4bb9-a5e2-cc8d32d57723) ![image](https://github.com/user-attachments/assets/70101d14-380a-4a5b-b9bb-04799cf3059a)
 
 
-
-
 ## Backend
 - Java 17
 - Springboot 3+
@@ -69,6 +68,7 @@ Dark mode with CSS variable
 - Mockito
 - Stripe
 - Email sender
+- SSE (Server-Sent Events)
   
 ## FrontEnd
 - Angular 18
@@ -81,4 +81,4 @@ Dark mode with CSS variable
 - Docker images deployed on ubuntu VPS
 - Jenkins
 - K3s
-# lingo-leap-fe
+# lingo-leap-be

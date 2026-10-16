@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable, Observer} from "rxjs";
 import {Report} from "../model/report";
 import {environment} from "../../environments/environment";
 
@@ -7,95 +7,120 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class SseService {
+  private readonly url = environment.domain + '/api/reports/stream';
 
   connectToReports(): Observable<Report[]> {
     return new Observable(observer => {
-      let disposed = false;
-      let controller: AbortController | undefined;
-      const url = `${environment.domain}/api/reports/stream`;
-      const waitBeforeReconnect = () => new Promise<void>(resolve => setTimeout(resolve, 3000));
+      const controller = new AbortController();
+      void this.listen(controller.signal, observer);
 
-      const connect = async () => {
-        while (!disposed) {
-          const token = localStorage.getItem('token');
-          if (!token) {
-            observer.error(new Error('Brak tokenu administratora. Zaloguj się ponownie.'));
-            return;
-          }
+      return () => controller.abort();
+    });
+  }
 
-          controller = new AbortController();
-          try {
-            const response = await fetch(url, {
-              headers: {
-                Accept: 'text/event-stream',
-                Authorization: 'Bearer ' + token
-              },
-              signal: controller.signal
-            });
+  private async listen(signal: AbortSignal, observer: Observer<Report[]>): Promise<void> {
+    while (!signal.aborted) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        observer.error(new Error('Brak tokenu administratora. Zaloguj się ponownie.'));
+        return;
+      }
 
-            if (!response.ok) {
-              throw new Error(`SSE zwróciło HTTP ${response.status}`);
-            }
-            if (!response.body) {
-              throw new Error('Przeglądarka nie udostępniła strumienia SSE.');
-            }
+      try {
+        await this.readConnection(token, signal, observer);
+      } catch (error) {
+        if (signal.aborted || (error instanceof DOMException && error.name === 'AbortError')) return;
+        observer.error(error);
+        return;
+      }
 
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let buffer = '';
-            let eventName = 'message';
-            let data: string[] = [];
+      await this.waitBeforeReconnect(signal);
+    }
+  }
 
-            const processLine = (line: string) => {
-              if (line === '') {
-                if (data.length && eventName === 'quiz-report') {
-                  try {
-                    observer.next(JSON.parse(data.join('\n')) as Report[]);
-                  } catch (error) {
-                    observer.error(error);
-                    disposed = true;
-                  }
-                }
-                eventName = 'message';
-                data = [];
-                return;
-              }
+  private async readConnection(
+    token: string,
+    signal: AbortSignal,
+    observer: Observer<Report[]>
+  ): Promise<void> {
+    const response = await fetch(this.url, {
+      headers: {
+        Accept: 'text/event-stream',
+        Authorization: 'Bearer ' + token
+      },
+      signal
+    });
 
-              if (line.startsWith(':')) return;
-              const separator = line.indexOf(':');
-              const field = separator < 0 ? line : line.slice(0, separator);
-              const value = separator < 0 ? '' : line.slice(separator + 1).replace(/^ /, '');
-              if (field === 'event') eventName = value;
-              if (field === 'data') data.push(value);
-            };
+    if (!response.ok) {
+      throw new Error('SSE zwróciło HTTP ' + response.status);
+    }
+    if (!response.body) {
+      throw new Error('Przeglądarka nie udostępniła strumienia SSE.');
+    }
 
-            while (!disposed) {
-              const {value, done} = await reader.read();
-              if (done) break;
-              buffer += decoder.decode(value, {stream: true});
-              let newline = buffer.indexOf('\n');
-              while (newline >= 0) {
-                processLine(buffer.slice(0, newline).replace(/\r$/, ''));
-                buffer = buffer.slice(newline + 1);
-                newline = buffer.indexOf('\n');
-              }
-            }
-            if (buffer.length) processLine(buffer.replace(/\r$/, ''));
-          } catch (error) {
-            if (disposed || (error instanceof DOMException && error.name === 'AbortError')) return;
-            observer.error(error);
-            return;
-          }
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let eventLines: string[] = [];
 
-          if (!disposed) await waitBeforeReconnect();
-        }
+    const processLine = (line: string) => {
+      const normalizedLine = line.replace(/\r$/, '');
+      if (normalizedLine === '') {
+        this.dispatchEvent(eventLines, observer);
+        eventLines = [];
+      } else {
+        eventLines.push(normalizedLine);
+      }
+    };
+
+    while (!signal.aborted) {
+      const {value, done} = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, {stream: true});
+      let newline = buffer.indexOf('\n');
+      while (newline >= 0) {
+        processLine(buffer.slice(0, newline));
+        buffer = buffer.slice(newline + 1);
+        newline = buffer.indexOf('\n');
+      }
+    }
+
+    if (buffer) eventLines.push(buffer);
+    if (eventLines.length) this.dispatchEvent(eventLines, observer);
+  }
+
+  private dispatchEvent(lines: string[], observer: Observer<Report[]>): void {
+    let eventName = 'message';
+    const data: string[] = [];
+
+    for (const line of lines) {
+      if (line.startsWith(':')) continue;
+
+      const separator = line.indexOf(':');
+      const field = separator < 0 ? line : line.slice(0, separator);
+      const value = separator < 0 ? '' : line.slice(separator + 1).replace(/^ /, '');
+
+      if (field === 'event') eventName = value;
+      if (field === 'data') data.push(value);
+    }
+
+    if (eventName === 'quiz-report' && data.length) {
+      observer.next(JSON.parse(data.join('\n')) as Report[]);
+    }
+  }
+
+  private waitBeforeReconnect(signal: AbortSignal): Promise<void> {
+    return new Promise(resolve => {
+      const onAbort = () => {
+        clearTimeout(timeout);
+        resolve();
       };
-
-      void connect();
-      return () => {
-        disposed = true;
-        controller?.abort();
-      };
+      const timeout = setTimeout(() => {
+        signal.removeEventListener('abort', onAbort);
+        resolve();
+      }, 3000);
+      signal.addEventListener('abort', onAbort, {once: true});
     });
   }
 }

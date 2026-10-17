@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SseService} from "../../service/sse.service";
@@ -7,6 +7,7 @@ import {Report} from "../../model/report";
 import {MatIconButton} from "@angular/material/button";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-report',
@@ -21,9 +22,10 @@ import {MatIcon} from "@angular/material/icon";
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss'
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
 
   reports: Report[] = [];
+  private reportsSubscription?: Subscription;
 
   constructor(private readonly sseService: SseService,
               private readonly router: Router) {
@@ -33,8 +35,16 @@ export class ReportComponent implements OnInit {
     this.getSseReport();
   }
 
+  ngOnDestroy(): void {
+    this.reportsSubscription?.unsubscribe();
+  }
+
   getSseReport() {
-    this.sseService.connectToReports().subscribe({
+    if (this.reportsSubscription && !this.reportsSubscription.closed) {
+      return;
+    }
+
+    this.reportsSubscription = this.sseService.connectToReports().subscribe({
       next: (reports: Report[]) => {
         this.reports = reports;
         console.log('Received report:', reports);

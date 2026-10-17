@@ -1,13 +1,14 @@
-import {Injectable} from "@angular/core";
-import {Observable, Observer} from "rxjs";
-import {Report} from "../model/report";
-import {environment} from "../../environments/environment";
+
+import { Injectable } from '@angular/core';
+import { Observable, Observer } from 'rxjs';
+import { Report } from '../model/report';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SseService {
-  // private readonly url = environment.domain + '/api/reports/stream';
+
   private readonly url = environment.domain + '/reports/stream';
 
   connectToReports(): Observable<Report[]> {
@@ -19,18 +20,21 @@ export class SseService {
     });
   }
 
-  private async listen(signal: AbortSignal, observer: Observer<Report[]>): Promise<void> {
+  private async listen(
+    signal: AbortSignal,
+    observer: Observer<Report[]>
+  ): Promise<void> {
     while (!signal.aborted) {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        observer.error(new Error('Brak tokenu administratora. Zaloguj się ponownie.'));
-        return;
-      }
-
       try {
-        await this.readConnection(token, signal, observer);
+        await this.readConnection(signal, observer);
       } catch (error) {
-        if (signal.aborted || (error instanceof DOMException && error.name === 'AbortError')) return;
+        if (
+          signal.aborted ||
+          (error instanceof DOMException && error.name === 'AbortError')
+        ) {
+          return;
+        }
+
         observer.error(error);
         return;
       }
@@ -40,14 +44,12 @@ export class SseService {
   }
 
   private async readConnection(
-    token: string,
     signal: AbortSignal,
     observer: Observer<Report[]>
   ): Promise<void> {
     const response = await fetch(this.url, {
       headers: {
-        Accept: 'text/event-stream',
-        Authorization: 'Bearer ' + token
+        Accept: 'text/event-stream'
       },
       signal
     });
@@ -55,6 +57,7 @@ export class SseService {
     if (!response.ok) {
       throw new Error('SSE zwróciło HTTP ' + response.status);
     }
+
     if (!response.body) {
       throw new Error('Przeglądarka nie udostępniła strumienia SSE.');
     }
@@ -66,6 +69,7 @@ export class SseService {
 
     const processLine = (line: string) => {
       const normalizedLine = line.replace(/\r$/, '');
+
       if (normalizedLine === '') {
         this.dispatchEvent(eventLines, observer);
         eventLines = [];
@@ -75,11 +79,14 @@ export class SseService {
     };
 
     while (!signal.aborted) {
-      const {value, done} = await reader.read();
+      const { value, done } = await reader.read();
+
       if (done) break;
 
-      buffer += decoder.decode(value, {stream: true});
+      buffer += decoder.decode(value, { stream: true });
+
       let newline = buffer.indexOf('\n');
+
       while (newline >= 0) {
         processLine(buffer.slice(0, newline));
         buffer = buffer.slice(newline + 1);
@@ -87,11 +94,19 @@ export class SseService {
       }
     }
 
-    if (buffer) eventLines.push(buffer);
-    if (eventLines.length) this.dispatchEvent(eventLines, observer);
+    if (buffer) {
+      eventLines.push(buffer);
+    }
+
+    if (eventLines.length) {
+      this.dispatchEvent(eventLines, observer);
+    }
   }
 
-  private dispatchEvent(lines: string[], observer: Observer<Report[]>): void {
+  private dispatchEvent(
+    lines: string[],
+    observer: Observer<Report[]>
+  ): void {
     let eventName = 'message';
     const data: string[] = [];
 
@@ -100,7 +115,9 @@ export class SseService {
 
       const separator = line.indexOf(':');
       const field = separator < 0 ? line : line.slice(0, separator);
-      const value = separator < 0 ? '' : line.slice(separator + 1).replace(/^ /, '');
+      const value = separator < 0
+        ? ''
+        : line.slice(separator + 1).replace(/^ /, '');
 
       if (field === 'event') eventName = value;
       if (field === 'data') data.push(value);
@@ -117,11 +134,13 @@ export class SseService {
         clearTimeout(timeout);
         resolve();
       };
+
       const timeout = setTimeout(() => {
         signal.removeEventListener('abort', onAbort);
         resolve();
       }, 3000);
-      signal.addEventListener('abort', onAbort, {once: true});
+
+      signal.addEventListener('abort', onAbort, { once: true });
     });
   }
 }

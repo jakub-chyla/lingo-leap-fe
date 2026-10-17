@@ -7,7 +7,8 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class SseService {
-  private readonly url = environment.domain + '/api/reports/stream';
+  // private readonly url = environment.domain + '/api/reports/stream';
+  private readonly url = environment.domain + '/reports/stream';
 
   connectToReports(): Observable<Report[]> {
     return new Observable(observer => {

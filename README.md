@@ -77,8 +77,8 @@ Dark mode with CSS variable
 - Routing
 - AuthGuard
   
-## Devops
-- Docker images deployed on ubuntu VPS
+## Devops/Deployment
+- Linux VPS
 - Jenkins
 - K3s
-# lingo-leap-be
+- WireGuard

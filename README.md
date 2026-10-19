@@ -67,7 +67,7 @@ Dark mode with CSS variable
 - JUnit 5
 - Mockito
 - TestContainer
-- Stripe
+- Stripe (demo)
 - Email sender
 - SSE (Server-Sent Events)
   

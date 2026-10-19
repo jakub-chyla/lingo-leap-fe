@@ -66,6 +66,7 @@ Dark mode with CSS variable
 - Flyway database migration
 - JUnit 5
 - Mockito
+- TestContainer
 - Stripe
 - Email sender
 - SSE (Server-Sent Events)
@@ -80,6 +81,7 @@ Dark mode with CSS variable
 ## Devops/Deployment
 - Linux VPS
 - Jenkins
+- Docker
 - K3s
 - WireGuard
 

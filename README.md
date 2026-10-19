@@ -60,7 +60,7 @@ Dark mode with CSS variable
 ## Backend
 - Java 17
 - Springboot 3+
-- Spring Security JWT
+- Spring Security JWT, roles
 - Postgresql
 - Hibernate
 - Flyway database migration
@@ -88,5 +88,4 @@ Dark mode with CSS variable
 ## Communication Patterns Diagram
 
 <img width="472" height="425" alt="image" src="https://github.com/user-attachments/assets/735d41d2-05c2-47d9-9ba3-a82de44c5b19" />
-
 

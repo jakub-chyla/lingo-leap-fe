@@ -1,0 +1,41 @@
+<div class="flex justify-center items-center h-[90vh] p-8">
+  <mat-card class="card max-w-[650px] min-w-[375px]" appearance="outlined">
+    <div class="flex justify-between items-center gap-2 pb-2">
+      <div class="pl-4 text-xl">
+        <span>{{ 'Report kafka, rabbit' }}</span>
+      </div>
+      <div>
+        <button mat-icon-button (click)="navigateToMain()">
+          <mat-icon color="warn">close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <mat-card-content>
+
+      <section class="pt-4" aria-live="polite">
+        @if (reports.length > 0) {
+          <div class="max-h-[24vh] overflow-y-auto">
+            <table class="w-full text-left">
+              <thead>
+              <tr>
+                <th class="p-2">Użytkownik</th>
+                <th class="p-2">Poprawne odpowiedzi</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (report of reports; track report.name) {
+                  <tr>
+                    <td class="border-t p-2">{{ report.name }}</td>
+                    <td class="border-t p-2">{{ report.correctCount }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <p class="text-sm opacity-70">Oczekiwanie na raport z backendu…</p>
+        }
+      </section>
+    </mat-card-content>
+  </mat-card>
+</div>

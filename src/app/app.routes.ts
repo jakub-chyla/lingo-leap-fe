@@ -7,6 +7,7 @@ import {AboutComponent} from "./page/about/about.component";
 import {PricingComponent} from "./page/pricing/pricing.component";
 import {Role} from "./enum/role";
 import {AuthGuard} from "./AuthGuard";
+import {ReportComponent} from "./page/report/report.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'full'},
@@ -17,6 +18,13 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     title: 'Admin',
+    canActivate: [AuthGuard],
+    data: {requiredRole: Role.ADMIN},
+  },
+  {
+    path: 'report',
+    component: ReportComponent,
+    title: 'Report',
     canActivate: [AuthGuard],
     data: {requiredRole: Role.ADMIN},
   },

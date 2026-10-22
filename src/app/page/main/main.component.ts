@@ -291,6 +291,10 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private readAnswer() {
+    if (!this.autoRead) {
+      return;
+    }
+
     if (this.englishToPolish) {
       this.soundService.playSound(this.englishBlobSound);
     } else {
@@ -314,11 +318,13 @@ export class MainComponent implements OnInit, OnDestroy {
         this.newShuffle = false;
       }
 
-      if (this.autoNext) {
+      if (this.autoNext && this.autoRead) {
         const sub = this.soundService.soundEnded$.subscribe(() => {
           this.countdownAfterAnswer();
           sub.unsubscribe(); // prevent memory leaks
         });
+      } else if (this.autoNext) {
+        this.countdownAfterAnswer();
       }
     }
   }

@@ -13,22 +13,21 @@ import {NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-pricing',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    FormsModule,
-    MatCardFooter,
-    MatIcon,
-    MatIconButton,
-    ReactiveFormsModule,
-    NgIf,
-    MatProgressSpinner
-  ],
-  templateUrl: './pricing.component.html',
-  styleUrl: './pricing.component.scss'
+    selector: 'app-pricing',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardContent,
+        FormsModule,
+        MatCardFooter,
+        MatIcon,
+        MatIconButton,
+        ReactiveFormsModule,
+        NgIf,
+        MatProgressSpinner
+    ],
+    templateUrl: './pricing.component.html',
+    styleUrl: './pricing.component.scss'
 })
 export class PricingComponent implements OnInit {
   user?: User | null;

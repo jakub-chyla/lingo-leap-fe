@@ -22,21 +22,20 @@ import {ReinforcementService} from "../../service/reinforcement.service";
 
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatSlideToggle,
-    NgForOf,
-    NgIf,
-    FormsModule,
-    NgClass,
-    MatProgressBar
-  ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+    selector: 'app-main',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardContent,
+        MatSlideToggle,
+        NgForOf,
+        NgIf,
+        FormsModule,
+        NgClass,
+        MatProgressBar
+    ],
+    templateUrl: './main.component.html',
+    styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit, OnDestroy {
   private MAX_CACHE_SIZE = 4;

@@ -26,32 +26,30 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackBarComponent} from "../../snack-bar/snack-bar.component";
 
 @Component({
-  selector: 'app-log-in',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatButton,
-    MatCardContent,
-    MatCardFooter,
-    ReactiveFormsModule,
-    MatFormField,
-    MatInput,
-
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatCardModule,
-    MatDividerModule,
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatProgressSpinner
-  ],
-  templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+    selector: 'app-log-in',
+    imports: [
+        MatCard,
+        MatButton,
+        MatCardContent,
+        MatCardFooter,
+        ReactiveFormsModule,
+        MatFormField,
+        MatInput,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatCardModule,
+        MatDividerModule,
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatProgressSpinner
+    ],
+    templateUrl: './log-in.component.html',
+    styleUrl: './log-in.component.scss'
 })
 export class LogInComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);

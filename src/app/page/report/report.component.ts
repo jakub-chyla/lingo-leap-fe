@@ -10,17 +10,16 @@ import {MatIcon} from "@angular/material/icon";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-report',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardContent,
-    MatIcon,
-    MatIconButton,
-    ReactiveFormsModule
-  ],
-  templateUrl: './report.component.html',
-  styleUrl: './report.component.scss'
+    selector: 'app-report',
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatIcon,
+        MatIconButton,
+        ReactiveFormsModule
+    ],
+    templateUrl: './report.component.html',
+    styleUrl: './report.component.scss'
 })
 export class ReportComponent implements OnInit, OnDestroy {
 

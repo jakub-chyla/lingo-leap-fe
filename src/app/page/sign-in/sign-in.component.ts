@@ -12,25 +12,24 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-sign-in',
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatCardFooter,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-    MatIcon,
-    MatIconButton,
-    MatProgressSpinner,
-    NgIf
-  ],
-  templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+    selector: 'app-sign-in',
+    imports: [
+        FormsModule,
+        MatButton,
+        MatCard,
+        MatCardContent,
+        MatCardFooter,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        MatIcon,
+        MatIconButton,
+        MatProgressSpinner,
+        NgIf
+    ],
+    templateUrl: './sign-in.component.html',
+    styleUrl: './sign-in.component.scss'
 })
 export class SignInComponent implements OnInit {
   myForm!: FormGroup;

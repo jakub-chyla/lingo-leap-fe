@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MOST_WRONG, RANDOM, SOUNDS_FOR_EMPTY_WORDS, WORD} from "../shared/api-url";
 import {AuthHelper} from "../shared/auth-helper";

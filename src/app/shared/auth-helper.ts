@@ -1,4 +1,4 @@
-import {HttpHeaders} from "@angular/common/http";
+import { HttpHeaders } from "@angular/common/http";
 
 export class AuthHelper {
   public static getHeaderWithToken() {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, tap} from "rxjs";
 import {User} from "../model/user";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {LOG_IN, REFRESH_TOKEN, REGISTER} from "../shared/api-url";
 import {AuthRequest} from "../model/auth-request";
 import {AuthResponse} from "../model/auth-response";

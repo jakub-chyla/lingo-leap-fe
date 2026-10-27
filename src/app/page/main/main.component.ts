@@ -174,7 +174,10 @@ export class MainComponent implements OnInit, OnDestroy {
             const targetAttachment = this.currentWord[targetKey] as Attachment;
             targetAttachment.data = data;
             this.addToCache(attachment.id!.toString(), data);
-            const blobSound = new Blob([data], {type: 'audio/mp3'});
+
+            const audioBuffer = new ArrayBuffer(data.byteLength);
+            new Uint8Array(audioBuffer).set(data);
+            const blobSound = new Blob([audioBuffer], {type: 'audio/mp3'});
 
             if (targetKey === 'polishAttachment') {
               this.polishBlobSound = blobSound;
@@ -194,7 +197,9 @@ export class MainComponent implements OnInit, OnDestroy {
   private addToCache(key: string, data: Uint8Array) {
     if (this.audioCache.size >= this.MAX_CACHE_SIZE) {
       const oldestKey = this.audioCache.keys().next().value;
-      this.audioCache.delete(oldestKey);
+      if (oldestKey !== undefined) {
+        this.audioCache.delete(oldestKey);
+      }
     }
 
     this.audioCache.set(key, data);

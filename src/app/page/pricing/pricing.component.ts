@@ -39,8 +39,8 @@ export class PricingComponent implements OnInit {
   ) {
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapePress() {
     this.navigateToMain();
   }
 

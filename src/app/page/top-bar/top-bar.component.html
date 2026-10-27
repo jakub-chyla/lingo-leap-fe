@@ -38,12 +38,12 @@
           (click)="switchMode()">
     <mat-icon>dark_mode</mat-icon>
   </button>
-  <button *ngIf="this.user?.token === undefined || this.user?.token === null" mat-icon-button
+  <button *ngIf="!this.user?.token" mat-icon-button
           matTooltip="Log in"
           (click)="navigateToLogin()">
     <mat-icon>login</mat-icon>
   </button>
-  <button *ngIf="!(this.user?.token === undefined || this.user?.token === null)" mat-icon-button
+  <button *ngIf="this.user?.token" mat-icon-button
           matTooltip="Log out"
           (click)="logOut()">
     <mat-icon>logout</mat-icon>

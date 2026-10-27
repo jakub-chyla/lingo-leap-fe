@@ -58,13 +58,13 @@ export class LogInComponent implements OnInit {
   user?: User;
   loading = false;
 
-  @HostListener('document:keydown.enter', ['$event'])
-  onEnterPress(event: KeyboardEvent) {
+  @HostListener('document:keydown.enter')
+  onEnterPress() {
     this.logIn();
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapePress() {
     this.navigateToMain();
   }
 

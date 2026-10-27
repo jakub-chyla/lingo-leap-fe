@@ -19,8 +19,8 @@ import {Router} from "@angular/router";
 })
 export class AboutComponent implements OnInit {
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapePress() {
     this.navigateToMain();
   }
 

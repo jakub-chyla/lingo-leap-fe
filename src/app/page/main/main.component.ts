@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Word} from "../../model/word";
 import {MatButton} from "@angular/material/button";
 import {MatCard, MatCardContent} from "@angular/material/card";
@@ -74,7 +74,8 @@ export class MainComponent implements OnInit, OnDestroy {
               private readonly storageService: StorageService,
               private readonly historyService: HistoryService,
               private readonly reinforcementService: ReinforcementService,
-              private readonly soundService: SoundService) {
+              private readonly soundService: SoundService,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -130,6 +131,7 @@ export class MainComponent implements OnInit, OnDestroy {
       this.getSounds();
       this.getCount();
       this.getReinforcement();
+      this.changeDetectorRef.markForCheck();
     });
     this.wordService.getMostCommonWrongHistoryByUser(this.getUserId()).subscribe((words: Word[]) => {
     });
@@ -369,6 +371,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.historyService.saveWord(id, this.user.id, isCorrect).subscribe((res) => {
           this.actualWrongAnswersCount = res;
           this.setProgressBarValue();
+          this.changeDetectorRef.markForCheck();
         });
       }
     }

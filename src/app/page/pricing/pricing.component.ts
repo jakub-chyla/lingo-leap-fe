@@ -9,7 +9,6 @@ import {ProductRequest} from "../../model/product-request";
 import {StripeResponse} from "../../model/stripe-response";
 import {PurchaseService} from "../../service/purchase.service";
 import {User} from "../../model/user";
-import {NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
@@ -23,7 +22,6 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
         MatIcon,
         MatIconButton,
         ReactiveFormsModule,
-        NgIf,
         MatProgressSpinner
     ],
     templateUrl: './pricing.component.html',

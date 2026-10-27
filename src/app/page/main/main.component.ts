@@ -3,7 +3,7 @@ import {Word} from "../../model/word";
 import {MatButton} from "@angular/material/button";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AttachmentService} from "../../service/attachment.service";
 import {WordService} from "../../service/word.service";
@@ -29,7 +29,6 @@ import {ReinforcementService} from "../../service/reinforcement.service";
         MatCardContent,
         MatSlideToggle,
         NgForOf,
-        NgIf,
         FormsModule,
         NgClass,
         MatProgressBar

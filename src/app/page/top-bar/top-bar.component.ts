@@ -6,7 +6,6 @@ import {MatTooltip} from "@angular/material/tooltip";
 import {Router} from "@angular/router";
 import {User} from "../../model/user";
 import {UserService} from "../../service/user.service";
-import {NgIf} from "@angular/common";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
@@ -16,7 +15,6 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
         MatIconButton,
         MatIcon,
         MatTooltip,
-        NgIf,
         MatMenu,
         MatMenuTrigger,
         MatMenuItem

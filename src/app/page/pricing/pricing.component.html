@@ -11,7 +11,8 @@
       </div>
     </div>
     <mat-card-content>
-      <div *ngIf="user?.username" class="pricing-cloud" (click)="checkout()">
+      @if (user?.username) {
+      <div class="pricing-cloud" (click)="checkout()">
         <div class="m-[20px]">
           <h1>Subscription</h1>
           <h4>1.99$/week</h4>
@@ -22,7 +23,8 @@
           </div>
         </div>
       </div>
-      <div *ngIf="!user?.username" class="pricing-cloud">
+      } @else {
+      <div class="pricing-cloud">
         <div class="m-[20px]">
           <h1>Subscription</h1>
           <h4>1.99$/week</h4>
@@ -33,26 +35,27 @@
           </div>
         </div>
       </div>
+      }
     </mat-card-content>
     <mat-card-footer>
       <div class="flex justify-center pt-[20px]">
-        <div *ngIf="user?.username">
-          <ng-container *ngIf="!loading; else loadingTemplate">
+        @if (user?.username) {
+          @if (!loading) {
             <button class="w-[155px]" mat-raised-button color="accent" (click)="checkout()"
                     type="submit">Get subscription
             </button>
-          </ng-container>
-          <ng-template #loadingTemplate>
+          } @else {
             <button class="w-[155px]" mat-raised-button color="accent" [disabled]="true" type="submit">
               <mat-spinner [diameter]="22"></mat-spinner>
             </button>
-          </ng-template>
-        </div>
-        <div *ngIf="!user?.username">
+          }
+        } @else {
+        <div>
           <button mat-raised-button color="primary" (click)="navigateToLogin()"
                   type="submit">Log in
           </button>
         </div>
+        }
       </div>
     </mat-card-footer>
   </mat-card>

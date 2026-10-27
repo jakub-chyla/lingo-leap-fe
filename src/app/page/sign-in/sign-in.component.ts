@@ -9,7 +9,7 @@ import {MatInput} from "@angular/material/input";
 import {Router} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {NgIf} from "@angular/common";
+import {NgTemplateOutlet} from "@angular/common";
 
 @Component({
     selector: 'app-sign-in',
@@ -26,7 +26,7 @@ import {NgIf} from "@angular/common";
         MatIcon,
         MatIconButton,
         MatProgressSpinner,
-        NgIf
+        NgTemplateOutlet
     ],
     templateUrl: './sign-in.component.html',
     styleUrl: './sign-in.component.scss'

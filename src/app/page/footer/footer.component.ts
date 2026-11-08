@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {BuildService} from "../../service/build.service";
 
 @Component({
@@ -8,16 +8,16 @@ import {BuildService} from "../../service/build.service";
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent implements OnInit {
-  lastUpdate ="";
+  lastUpdate = '';
 
-
-  constructor(private buildService: BuildService) {
-  }
+  private buildService = inject(BuildService);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
     this.buildService.getBuildTime().subscribe(res=>{
       if(res){
         this.lastUpdate = res.split('T')[0] + " " + res.split('T')[1].split('.')[0];
+        this.cdr.markForCheck()
       }
     });
   }

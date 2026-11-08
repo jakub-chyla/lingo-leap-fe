@@ -9,15 +9,15 @@
 
 
 # --------- 1️⃣ Build stage ----------
-FROM node:18-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build -- --configuration production
 
 # --------- 2️⃣ Runtime stage ----------
-FROM node:18-alpine
+FROM node:24-alpine
 WORKDIR /app
 RUN npm install -g serve
 COPY --from=build /app/dist/lingo-leap-fe/browser ./dist

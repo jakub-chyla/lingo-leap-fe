@@ -6,24 +6,21 @@ import {MatTooltip} from "@angular/material/tooltip";
 import {Router} from "@angular/router";
 import {User} from "../../model/user";
 import {UserService} from "../../service/user.service";
-import {NgIf} from "@angular/common";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
-  selector: 'app-top-bar',
-  standalone: true,
-  imports: [
-    MatToolbar,
-    MatIconButton,
-    MatIcon,
-    MatTooltip,
-    NgIf,
-    MatMenu,
-    MatMenuTrigger,
-    MatMenuItem
-  ],
-  templateUrl: './top-bar.component.html',
-  styleUrl: './top-bar.component.scss'
+    selector: 'app-top-bar',
+    imports: [
+        MatToolbar,
+        MatIconButton,
+        MatIcon,
+        MatTooltip,
+        MatMenu,
+        MatMenuTrigger,
+        MatMenuItem
+    ],
+    templateUrl: './top-bar.component.html',
+    styleUrl: './top-bar.component.scss'
 })
 export class TopBarComponent implements OnInit {
   user?: User | null;

@@ -37,11 +37,13 @@
     <mat-card-footer>
       <div class="flex justify-center">
         <div>
-          <ng-container *ngIf="!loading; else loadingTemplate">
+          @if (!loading) {
             <button mat-raised-button color="primary" (click)="signIn()" [disabled]="myForm.invalid" type="submit">
               Sign in
             </button>
-          </ng-container>
+          } @else {
+            <ng-container [ngTemplateOutlet]="loadingTemplate"></ng-container>
+          }
           <ng-template #loadingTemplate>
             <button class="w-[83px]" mat-raised-button color="primary" [disabled]="true" type="submit">
               <mat-spinner [diameter]="22"></mat-spinner>

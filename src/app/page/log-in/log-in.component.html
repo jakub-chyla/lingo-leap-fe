@@ -35,18 +35,17 @@
         </div>
         <div>
 
-          <ng-container *ngIf="!loading; else loadingTemplate">
+          @if (!loading) {
             <button mat-raised-button color="primary"
                     (click)="logIn()"
                     [disabled]="myForm.invalid">
               Log in
             </button>
-          </ng-container>
-          <ng-template #loadingTemplate>
+          } @else {
             <button class="w-[77px]" mat-raised-button color="primary" [disabled]="true" type="submit">
               <mat-spinner [diameter]="22"></mat-spinner>
             </button>
-          </ng-template>
+          }
 
         </div>
       </div>

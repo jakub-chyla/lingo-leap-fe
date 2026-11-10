@@ -9,26 +9,23 @@ import {ProductRequest} from "../../model/product-request";
 import {StripeResponse} from "../../model/stripe-response";
 import {PurchaseService} from "../../service/purchase.service";
 import {User} from "../../model/user";
-import {NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-pricing',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    FormsModule,
-    MatCardFooter,
-    MatIcon,
-    MatIconButton,
-    ReactiveFormsModule,
-    NgIf,
-    MatProgressSpinner
-  ],
-  templateUrl: './pricing.component.html',
-  styleUrl: './pricing.component.scss'
+    selector: 'app-pricing',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardContent,
+        FormsModule,
+        MatCardFooter,
+        MatIcon,
+        MatIconButton,
+        ReactiveFormsModule,
+        MatProgressSpinner
+    ],
+    templateUrl: './pricing.component.html',
+    styleUrl: './pricing.component.scss'
 })
 export class PricingComponent implements OnInit {
   user?: User | null;
@@ -40,8 +37,8 @@ export class PricingComponent implements OnInit {
   ) {
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePress(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onEscapePress() {
     this.navigateToMain();
   }
 

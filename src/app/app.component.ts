@@ -5,16 +5,15 @@ import {RouterOutlet} from "@angular/router";
 import {FooterComponent} from "./page/footer/footer.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    FormsModule,
-    TopBarComponent,
-    RouterOutlet,
-    FooterComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [
+        FormsModule,
+        TopBarComponent,
+        RouterOutlet,
+        FooterComponent
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
 

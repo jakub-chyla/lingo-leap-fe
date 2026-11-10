@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Word} from "../../model/word";
 import {MatButton} from "@angular/material/button";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AttachmentService} from "../../service/attachment.service";
 import {WordService} from "../../service/word.service";
@@ -22,21 +22,19 @@ import {ReinforcementService} from "../../service/reinforcement.service";
 
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatSlideToggle,
-    NgForOf,
-    NgIf,
-    FormsModule,
-    NgClass,
-    MatProgressBar
-  ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+    selector: 'app-main',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardContent,
+        MatSlideToggle,
+        NgForOf,
+        FormsModule,
+        NgClass,
+        MatProgressBar
+    ],
+    templateUrl: './main.component.html',
+    styleUrl: './main.component.scss'
 })
 export class MainComponent implements OnInit, OnDestroy {
   private MAX_CACHE_SIZE = 4;
@@ -76,7 +74,8 @@ export class MainComponent implements OnInit, OnDestroy {
               private readonly storageService: StorageService,
               private readonly historyService: HistoryService,
               private readonly reinforcementService: ReinforcementService,
-              private readonly soundService: SoundService) {
+              private readonly soundService: SoundService,
+              private readonly changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -132,6 +131,7 @@ export class MainComponent implements OnInit, OnDestroy {
       this.getSounds();
       this.getCount();
       this.getReinforcement();
+      this.changeDetectorRef.markForCheck();
     });
     this.wordService.getMostCommonWrongHistoryByUser(this.getUserId()).subscribe((words: Word[]) => {
     });
@@ -175,7 +175,10 @@ export class MainComponent implements OnInit, OnDestroy {
             const targetAttachment = this.currentWord[targetKey] as Attachment;
             targetAttachment.data = data;
             this.addToCache(attachment.id!.toString(), data);
-            const blobSound = new Blob([data], {type: 'audio/mp3'});
+
+            const audioBuffer = new ArrayBuffer(data.byteLength);
+            new Uint8Array(audioBuffer).set(data);
+            const blobSound = new Blob([audioBuffer], {type: 'audio/mp3'});
 
             if (targetKey === 'polishAttachment') {
               this.polishBlobSound = blobSound;
@@ -195,7 +198,9 @@ export class MainComponent implements OnInit, OnDestroy {
   private addToCache(key: string, data: Uint8Array) {
     if (this.audioCache.size >= this.MAX_CACHE_SIZE) {
       const oldestKey = this.audioCache.keys().next().value;
-      this.audioCache.delete(oldestKey);
+      if (oldestKey !== undefined) {
+        this.audioCache.delete(oldestKey);
+      }
     }
 
     this.audioCache.set(key, data);
@@ -366,6 +371,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this.historyService.saveWord(id, this.user.id, isCorrect).subscribe((res) => {
           this.actualWrongAnswersCount = res;
           this.setProgressBarValue();
+          this.changeDetectorRef.markForCheck();
         });
       }
     }

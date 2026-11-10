@@ -29,35 +29,34 @@ import {MatSort, MatSortModule} from "@angular/material/sort";
 import {finalize} from "rxjs";
 
 @Component({
-  selector: 'app-admin',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    FormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-    MatIcon,
-    MatIconButton,
-    MatTable,
-    MatHeaderCell,
-    MatColumnDef,
-    MatCell,
-    MatHeaderRow,
-    MatRow,
-    MatRowDef,
-    MatHeaderRowDef,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatNoDataRow,
-    MatSort,
-    MatSortModule
-  ],
-  templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss'
+    selector: 'app-admin',
+    imports: [
+        MatButton,
+        MatCard,
+        MatCardContent,
+        FormsModule,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        MatIcon,
+        MatIconButton,
+        MatTable,
+        MatHeaderCell,
+        MatColumnDef,
+        MatCell,
+        MatHeaderRow,
+        MatRow,
+        MatRowDef,
+        MatHeaderRowDef,
+        MatCellDef,
+        MatHeaderCellDef,
+        MatNoDataRow,
+        MatSort,
+        MatSortModule
+    ],
+    templateUrl: './admin.component.html',
+    styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements OnInit, AfterViewInit {
   myForm!: FormGroup;

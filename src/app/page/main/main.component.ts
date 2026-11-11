@@ -133,8 +133,6 @@ export class MainComponent implements OnInit, OnDestroy {
       this.getReinforcement();
       this.changeDetectorRef.markForCheck();
     });
-    this.wordService.getMostCommonWrongHistoryByUser(this.getUserId()).subscribe((words: Word[]) => {
-    });
     this.newShuffle = true;
   }
 

@@ -19,20 +19,24 @@ import {SoundService} from "../../service/sound.service";
 import {HistoryService} from "../../service/history.service";
 import {Subscription} from "rxjs";
 import {ReinforcementService} from "../../service/reinforcement.service";
+import {MatSlider, MatSliderThumb} from "@angular/material/slider";
+import {SettingsService, UserSettings} from "../../service/settings.service";
 
 
 @Component({
     selector: 'app-main',
-    imports: [
-        MatButton,
-        MatCard,
-        MatCardContent,
-        MatSlideToggle,
-        NgForOf,
-        FormsModule,
-        NgClass,
-        MatProgressBar
-    ],
+  imports: [
+    MatButton,
+    MatCard,
+    MatCardContent,
+    MatSlideToggle,
+    NgForOf,
+    FormsModule,
+    NgClass,
+    MatProgressBar,
+    MatSlider,
+    MatSliderThumb
+  ],
     templateUrl: './main.component.html',
     styleUrl: './main.component.scss'
 })
@@ -62,6 +66,7 @@ export class MainComponent implements OnInit, OnDestroy {
   actualWrongAnswersCount: number = 0
   englishToPolish = true;
   progressValue = 0;
+  mostWrongVsLeastAnswered = 50;
   buttonRows: number[][] = [
     [0, 1, 2],
     [3, 4, 5],
@@ -74,6 +79,7 @@ export class MainComponent implements OnInit, OnDestroy {
               private readonly storageService: StorageService,
               private readonly historyService: HistoryService,
               private readonly reinforcementService: ReinforcementService,
+              private readonly settingsService: SettingsService,
               private readonly soundService: SoundService,
               private readonly changeDetectorRef: ChangeDetectorRef) {
   }
@@ -91,6 +97,9 @@ export class MainComponent implements OnInit, OnDestroy {
   getUser() {
     this.userService.user$.subscribe((user) => {
       this.user = user;
+      if (user?.id) {
+        this.loadUserSettings();
+      }
       this.getActualWrongAnswersCount();
     });
   }
@@ -258,6 +267,21 @@ export class MainComponent implements OnInit, OnDestroy {
 
   protected settingChanged() {
     this.setSettings();
+  }
+
+  private loadUserSettings() {
+    this.settingsService.getSettings().subscribe((settings: UserSettings) => {
+      const total = settings.mostWrong + settings.leastAnswered;
+      this.mostWrongVsLeastAnswered = total === 0
+        ? 50
+        : Math.round(settings.mostWrong / total * 100);
+    });
+  }
+
+  protected savePreferenceSlider() {
+    const mostWrong = this.mostWrongVsLeastAnswered;
+    const leastAnswered = 100 - mostWrong;
+    this.settingsService.updateSettings({mostWrong, leastAnswered}).subscribe();
   }
 
   setSettings() {

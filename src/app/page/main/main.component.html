@@ -74,6 +74,13 @@
         {{ 'auto read' }}
         <mat-slide-toggle [(ngModel)]="autoRead" (ngModelChange)="settingChanged()"></mat-slide-toggle>
       </div>
+      <div class="flex justify-center py-10">
+        <div class="word flex items-center">{{ 'least answered' }}</div>
+        <mat-slider class="slider" min="0" max="100" step="1" discrete>
+          <input matSliderThumb [(ngModel)]="mostWrongVsLeastAnswered" (change)="savePreferenceSlider()">
+        </mat-slider>
+        <div class="word flex items-center">{{ 'most wrong' }}</div>
+      </div>
     }
     @if (!settings) {
     <div class="flex justify-center gap-2 pt-[25px]">

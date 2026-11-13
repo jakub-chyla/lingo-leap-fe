@@ -9,6 +9,7 @@ export const SOUNDS_FOR_EMPTY_WORDS: string = ATTACHMENT + '/get-sounds-for-empt
 export const HISTORY: string = '/history';
 export const REGISTER: string = '/register';
 export const REINFORCEMENT: string = '/reinforcement';
+export const SETTINGS: string = '/settings';
 export const LOG_IN: string = '/login';
 export const REFRESH_TOKEN: string = '/refresh-token';
 export const CHECKOUT: string = '/purchase/checkout';

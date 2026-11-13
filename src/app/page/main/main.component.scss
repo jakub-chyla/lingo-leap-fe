@@ -53,6 +53,23 @@ $warn-color: #f24236;
   font-size: 22px !important;
 }
 
+.slider {
+
+  --mat-slider-focus-state-layer-color: none;
+
+  ::ng-deep .mdc-slider__thumb-knob {
+    border-color: $accent-color;
+  }
+  ::ng-deep .mdc-slider__track--active{
+    display: none ;
+  }
+  ::ng-deep .mdc-slider__track--inactive{
+    background-color: $accent-color;
+    opacity: 1;
+  }
+
+}
+
 .green-text {
   color: #00b500;
 }
